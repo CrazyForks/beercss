@@ -84,6 +84,94 @@ Download all files from CDN https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn
 <script type="module" src="/beercss/material-dynamic-colors.min.js"></script>
 ```
 
+### CUSTOM VERSION
+
+The custom version loads only the desired [Elements](ELEMENTS.md) and [Helpers](HELPERS.md). To use via CDN, specify a query string containing the [Elements](ELEMENTS.md) and [Helpers](HELPERS.md). This will load the files as small and separate modules. To use in a Node environment, import the [Elements](ELEMENTS.md) and [Helpers](HELPERS.md) directly. The custom version supports default and scoped versions.
+
+#### HTML
+
+```html
+<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.min.js?elements=button,badge&helpers=form"></script>
+```
+
+```html
+<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.min.js?elements=button,badge&helpers=form&scoped=1"></script>
+```
+
+#### JS
+
+```js
+ui("import", "elements=button,badge&helpers=form")
+```
+
+```js
+ui("import", "elements=button,badge&helpers=form&scoped=1")
+```
+
+#### CSS
+
+```css
+@import "beercss/dist/cdn/settings/global.css";
+@import "beercss/dist/cdn/settings/light.css";
+@import "beercss/dist/cdn/settings/dark.css";
+@import "beercss/dist/cdn/settings/font.css";
+@import "beercss/dist/cdn/settings/reset.css";
+@import "beercss/dist/cdn/settings/theme.css";
+@import "beercss/dist/cdn/helpers/form.css";
+@import "beercss/dist/cdn/elements/badge.css";
+@import "beercss/dist/cdn/elements/button.css";
+```
+
+```css
+@import "beercss/dist/cdn/scoped/settings/global.css";
+@import "beercss/dist/cdn/scoped/settings/light.css";
+@import "beercss/dist/cdn/scoped/settings/dark.css";
+@import "beercss/dist/cdn/scoped/settings/font.css";
+@import "beercss/dist/cdn/scoped/settings/reset.css";
+@import "beercss/dist/cdn/scoped/settings/theme.css";
+@import "beercss/dist/cdn/scoped/helpers/form.css";
+@import "beercss/dist/cdn/scoped/elements/badge.css";
+@import "beercss/dist/cdn/scoped/elements/button.css";
+```
+
+#### NODE
+
+```js
+npm i beercss
+```
+
+```js
+import "beercss/dist/cdn/settings/global.css";
+import "beercss/dist/cdn/settings/light.css";
+import "beercss/dist/cdn/settings/dark.css";
+import "beercss/dist/cdn/settings/font.css";
+import "beercss/dist/cdn/settings/reset.css";
+import "beercss/dist/cdn/settings/theme.css";
+import "beercss/dist/cdn/helpers/form.css";
+import "beercss/dist/cdn/elements/badge.css";
+import "beercss/dist/cdn/elements/button.css";
+```
+
+```js
+import "beercss/dist/cdn/scoped/settings/global.css";
+import "beercss/dist/cdn/scoped/settings/light.css";
+import "beercss/dist/cdn/scoped/settings/dark.css";
+import "beercss/dist/cdn/scoped/settings/font.css";
+import "beercss/dist/cdn/scoped/settings/reset.css";
+import "beercss/dist/cdn/scoped/settings/theme.css";
+import "beercss/dist/cdn/scoped/helpers/form.css";
+import "beercss/dist/cdn/scoped/elements/badge.css";
+import "beercss/dist/cdn/scoped/elements/button.css";
+```
+
+#### CUSTOM ELEMENT
+
+The custom version of custom element has the scoped version by default.
+
+```html
+<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.custom-element.min.js?elements=button,badge&helpers=form"></script>
+```
+
 ### HTML
 
 You can use this html to setup your project. See on [Codepen](https://codepen.io/leo-bnu/pen/yLKLPxj). More about in [Main layout](docs/MAIN_LAYOUT.md).

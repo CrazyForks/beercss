@@ -1,15 +1,17 @@
-import { updateAllFields } from "./elements/fields";
-import { updateAllSliders } from "./elements/sliders";
+import { updateAllFields } from "./elements/field";
+import { updateAllSliders } from "./elements/slider";
 import { updateMode, updateTheme } from "./settings/theme";
 import { type IBeerCssTheme } from "./interfaces";
-import { addClass, guid, hasClass, hasTag, onWeak, query, queryAll, removeClass, updateAllClickable } from "./utils";
-import { updateDialog } from "./elements/dialogs";
-import { updateMenu } from "./elements/menus";
-import { updateSnackbar } from "./elements/snackbars";
-import { updatePage } from "./elements/pages";
-import { updateAllRipples } from "./helpers/ripples";
+import { addClass, guid, hasClass, hasTag, onWeak, query, removeClass, updateAllClickable } from "./utils";
+import { importModulesFromUrl, importModulesFromQueryString } from "./modules";
+import { updateDialog } from "./elements/dialog";
+import { updateMenu } from "./elements/menu";
+import { updateSnackbar } from "./elements/snackbar";
+import { updatePage } from "./elements/page";
+import { updateAllRipples } from "./helpers/ripple";
 import { updateAllProgress  } from "./elements/progress";
 
+const _url = import.meta.url;
 const _context = globalThis as any;
 let _timeoutMutation: ReturnType<typeof setTimeout>;
 let _mutation: MutationObserver | null;
@@ -90,6 +92,7 @@ function _ui(selector?: string | Element, options?: string | number | IBeerCssTh
     if (selector === "guid") return guid();
     if (selector === "mode") return updateMode(options as string);
     if (selector === "theme") return updateTheme(options);
+    if (selector === "import") { importModulesFromQueryString(options as string); return; }
 
     const to = query(selector);
     if (!to) return;
@@ -113,6 +116,7 @@ function start() {
   _context.ui = _ui;
 }
 
+importModulesFromUrl(_url);
 start();
 
 const ui = _context.ui;
