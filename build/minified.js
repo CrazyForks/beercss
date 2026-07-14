@@ -1,6 +1,6 @@
 import { build } from "vite";
-import fs from "fs";
 import cssnano from "cssnano";
+import { toModule } from "./utils.js";
 
 export default async function() {
   try {
@@ -15,9 +15,6 @@ export default async function() {
         },
       },
       build: {
-        // Minify CSS with cssnano (via postcss) only. esbuild's CSS minifier
-        // lowers :dir() to a :lang() approximation, which is incorrect for
-        // direction-based selectors; cssnano preserves :dir().
         cssMinify: false,
         esbuild: {
           legalComments: 'none'
@@ -40,8 +37,7 @@ export default async function() {
       },
     });
 
-    const cssContent = fs.readFileSync("./dist/cdn/beer.min.css", "utf-8");
-    fs.writeFileSync("./dist/cdn/beer.min.css", cssContent.replace(/url\(\//g, "url("));
+    toModule("./dist/cdn/beer.min.css", true);
   } catch (error) {
     console.error(error);
   }

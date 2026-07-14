@@ -1,5 +1,5 @@
 import { build } from "vite";
-import fs from "fs";
+import { toModule } from "./utils.js";
 
 export default async function() {
   try {
@@ -23,8 +23,7 @@ export default async function() {
       },
     });
   
-    const cssContent = fs.readFileSync("./dist/cdn/beer.css", "utf-8");
-    fs.writeFileSync("./dist/cdn/beer.css", cssContent.replace(/url\(\//g, "url("));
+    toModule("./dist/cdn/beer.css");
   } catch(error) {
     console.log(error);
   }

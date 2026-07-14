@@ -1,21 +1,12 @@
 import fs from "fs";
-
-function addScopedRule(css) {
-  return css.replace(/\/\* begin scoped \*\//g, "/* begin scoped */\n\n.beer,\nbeer-css {").replace(/\/\* end scoped \*\//g, "/* end scoped */\n\n}");
-}
-
-function removeSpaces(css) {
-  return css.replace(/\s{2,}|(\/\*.+\*\/)/g, "");
-}
+import { toModule } from "./utils.js";
 
 export default async function scoped() {
   try {
-    let unminified = fs.readFileSync("./dist/cdn/beer.css", "utf-8");
-    unminified = addScopedRule(unminified, ".beer");
-    const minified = removeSpaces(unminified);
-    
-    fs.writeFileSync("./dist/cdn/beer.scoped.css", unminified);
-    fs.writeFileSync("./dist/cdn/beer.scoped.min.css", minified);
+    fs.copyFileSync("./dist/cdn/beer.css", "./dist/cdn/beer.scoped.css");
+    fs.copyFileSync("./dist/cdn/beer.css", "./dist/cdn/beer.scoped.min.css");
+    toModule("./dist/cdn/beer.scoped.css", true);
+    toModule("./dist/cdn/beer.scoped.min.css", true, true);
   } catch (error) {
     console.error(error);
   }
