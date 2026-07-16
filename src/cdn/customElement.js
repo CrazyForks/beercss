@@ -38,7 +38,7 @@ class BeerCssCustomElement extends HTMLElement {
       linkElement.rel = "stylesheet";
       linkElement.href = new URL(`./beer.scoped.min.css`, _url.href).href;
 
-      const scriptElement = document.querySelector("head > script[src*=beer]");
+      const scriptElement = document.querySelector("script[src*=beer]");
       if (scriptElement) scriptElement.insertAdjacentElement("afterend", linkElement);
       else document.head.appendChild(linkElement);
     }

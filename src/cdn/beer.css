@@ -21,7 +21,6 @@
 @import "./helpers/shadow.css";
 @import "./helpers/size.css";
 @import "./helpers/space.css";
-@import "./helpers/typography.css";
 @import "./helpers/wave.css";
 @import "./helpers/zoom.css";
 @import "./elements/badge.css";
@@ -51,4 +50,5 @@
 @import "./elements/table.css";
 @import "./elements/tab.css";
 @import "./elements/tooltip.css";
+@import "./elements/typography.css";
 /* end scoped */
