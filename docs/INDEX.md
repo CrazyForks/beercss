@@ -92,7 +92,7 @@ The module version loads the [Settings](SETTINGS.md) , [Elements](ELEMENTS.md) a
 
 **Valid elements:** badge, bar, button, card, chip, dialog, divider, expansion, field, grid, icon, layout, list, mainLayout, media, menu, navigation, overlay, page, progress, selection, shape, slider, snackbar, tab, table, tooltip, typography
 
-**Valid helpers:** alignment, bluer, color, direction, elevate, form, margin, opacity, padding, position, responsive, ripple, scroll, shadow, size, space, wave, zoom
+**Valid helpers:** alignment, blur, color, direction, elevate, form, margin, opacity, padding, position, responsive, ripple, scroll, shadow, size, space, wave, zoom
 
 #### DEFAULT MODULE VERSION
 
