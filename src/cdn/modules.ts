@@ -12,7 +12,7 @@ const _allElements = ["badge", "bar", "button", "card", "chip", "dialog", "divid
 const _allHelpers = ["alignment", "blur", "color", "direction", "elevate", "form", "margin", "opacity", "padding", "position", "responsive", "ripple", "scroll", "shadow", "size", "space", "wave", "zoom"];
 
 export function getModule(url: string, path: string, scoped: boolean): string {
-  return new URL(scoped ? path.replace("./", "./scoped/") : path, url).href;
+  return new URL(scoped ? path.replace(".min.css", ".scoped.min.css") : path, url).href;
 }
 
 export async function importModulesFromUrl(url?: string): Promise<string> {
@@ -46,9 +46,9 @@ export async function importModulesFromUrl(url?: string): Promise<string> {
   _helpers = mergedHelpers;
 
   const modules: string[] = [
-    ...mergedSettings.map((name) => getModule(url, `./settings/${name}.css`, scoped)),
-    ...mergedHelpers.map((name) => getModule(url, `./helpers/${name}.css`, scoped)),
-    ...mergedElements.map((name) => getModule(url, `./elements/${name}.css`, scoped)),
+    ...mergedSettings.map((name) => getModule(url, `./settings/${name}.min.css`, scoped)),
+    ...mergedHelpers.map((name) => getModule(url, `./helpers/${name}.min.css`, scoped)),
+    ...mergedElements.map((name) => getModule(url, `./elements/${name}.min.css`, scoped)),
   ];
 
   const requests: Promise<string>[] = [];
