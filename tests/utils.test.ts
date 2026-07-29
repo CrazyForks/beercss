@@ -21,6 +21,39 @@ import {
   queryAll
 } from "../src/cdn/utils";
 
+import {
+  importModulesFromUrl
+} from "../src/cdn/utils";
+
+let fetchSpy: ReturnType<typeof vi.spyOn>;
+
+beforeAll(() => {
+  fetchSpy = vi.spyOn(globalThis, "fetch").mockResolvedValue({text: async () => "" } as Response);
+});
+
+test("importModulesFromUrl is defined", () => {
+  expect(typeof importModulesFromUrl).toBe("function");
+});
+
+test("importModulesFromUrl can be called without error", async () => {
+  await importModulesFromUrl("http://example.com");
+  await importModulesFromUrl("");
+  expect(fetchSpy).not.toHaveBeenCalled();
+});
+
+test("importModulesFromUrl loads all styles from url", async () => {
+  await importModulesFromUrl("http://example.com?elements=badge,button&helpers=form");
+  expect(fetchSpy).toHaveBeenCalledWith("http://example.com/settings/global.min.css");
+  expect(fetchSpy).toHaveBeenCalledWith("http://example.com/settings/light.min.css");
+  expect(fetchSpy).toHaveBeenCalledWith("http://example.com/settings/dark.min.css");
+  expect(fetchSpy).toHaveBeenCalledWith("http://example.com/settings/font.min.css");
+  expect(fetchSpy).toHaveBeenCalledWith("http://example.com/elements/badge.min.css");
+  expect(fetchSpy).toHaveBeenCalledWith("http://example.com/elements/button.min.css");
+  expect(fetchSpy).toHaveBeenCalledWith("http://example.com/helpers/form.min.css");
+  expect(fetchSpy).toHaveBeenCalledWith("http://example.com/settings/reset.min.css");
+  expect(fetchSpy).toHaveBeenCalledWith("http://example.com/settings/theme.min.css");
+});
+
 test("isChrome returns boolean", () => {
   expect(typeof isChrome).toBe("boolean");
 });

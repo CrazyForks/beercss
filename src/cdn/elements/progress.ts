@@ -36,6 +36,6 @@ export function updateAllProgress() {
   for (let i = 0; i < progresses.length; i++) updateProgress(progresses[i]);
 }
 
-globals.progress = {
+globals().progress = {
   updateAllProgress
 }

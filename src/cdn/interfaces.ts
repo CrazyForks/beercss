@@ -40,6 +40,10 @@ export interface IBeerCssThemeSetting {
   updateMode(value: string): string,
 }
 
+export interface IBeerCssUi {
+  (from: Element, to: Element | null, options?: any, e?: Event): Promise<void>
+}
+
 export interface IBeerCssGlobals {
   dialog?: IBeerCssDialogElement,
   field?: IBeerCssFieldElement,
@@ -49,5 +53,6 @@ export interface IBeerCssGlobals {
   ripple?: IBeerCssRippleHelper,
   slider?: IBeerCssSliderElement,
   snackbar?: IBeerCssSnackbarElement,
-  theme?: IBeerCssThemeSetting
+  theme?: IBeerCssThemeSetting,
+  ui?: IBeerCssUi
 }

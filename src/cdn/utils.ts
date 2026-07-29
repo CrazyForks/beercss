@@ -1,3 +1,14 @@
+let _settings: string[] = [];
+let _elements: string[] = [];
+let _helpers: string[] = [];
+let _urls: { [key: string]: Promise<string> } = {};
+let _url = new URL(import.meta.url);
+
+const _id = "__BeerCssStyleTag__";
+const _allSettings = ["global", "light", "dark", "font", "reset", "theme"];
+const _allElements = ["badge", "bar", "button", "card", "chip", "dialog", "divider", "expansion", "field", "grid", "icon", "layout", "list", "mainLayout", "media", "menu", "navigation", "overlay", "page", "progress", "selection", "shape", "slider", "snackbar", "tab", "table", "tooltip", "typography"];
+const _allHelpers = ["alignment", "blur", "color", "direction", "elevate", "form", "margin", "opacity", "padding", "position", "responsive", "ripple", "scroll", "shadow", "size", "space", "wave", "zoom"];
+const _allJs = ["dialog", "field", "menu", "page", "progress", "ripple", "slider", "snackbar", "theme"];
 const _emptyNodeList = [] as unknown as NodeListOf<Element>;
 const _weakMap = new WeakMap<Element, Map<string, Set<any>>>();
 
@@ -170,8 +181,96 @@ export function rootSizeInPixels(): number {
   return parseInt(size);
 }
 
-export function randomId() {
-  const timestamp = Date.now().toString(36);
-  const randomness = Math.random().toString(36).slice(2, 7);
-  return `x${timestamp}${randomness}`;
+export function getCssModule(url: string, path: string, scoped: boolean): string {
+  return new URL(scoped ? path.replace(".min.css", ".scoped.min.css") : path, url).href;
+}
+
+export function getJsModule(url: string, path: string): string {
+  return new URL(path, url).href;
+}
+
+export async function importModulesFromUrl(url?: string): Promise<string> {
+  url = url || _url?.href;
+  if (!url) return "";
+
+  const params = new URL(url).searchParams;
+  const settings: string[] = params.get("settings")?.split(",")?.filter(Boolean) || [];
+  const elements: string[] = params.get("elements")?.split(",")?.filter(Boolean) || [];
+  const helpers: string[] = params.get("helpers")?.split(",")?.filter(Boolean) || [];
+  const scoped = !!params.get("scoped");
+  
+  if (!settings.length && !elements.length && !helpers.length) return "";
+
+  const mergedSettings = params.has("settings")
+    ? Array.from(new Set([...settings, ..._settings])).sort()
+    : _allSettings;
+
+  const mergedElements = params.has("elements")
+    ? Array.from(new Set([...elements, ..._elements])).sort()
+    : _allElements
+
+  const mergedHelpers = params.has("helpers")
+    ? Array.from(new Set([...helpers, ..._helpers])).sort()
+    : _allHelpers
+
+  if (mergedSettings.length == _settings.length && mergedElements.length == _elements.length && mergedHelpers.length == _helpers.length) return "";
+  
+  _settings = mergedSettings;
+  _elements = mergedElements;
+  _helpers = mergedHelpers;
+  
+  const cssModules: string[] = [
+    ...mergedSettings.map((name) => getCssModule(url, `./settings/${name}.min.css`, scoped)),
+    ...mergedHelpers.map((name) => getCssModule(url, `./helpers/${name}.min.css`, scoped)),
+    ...mergedElements.map((name) => getCssModule(url, `./elements/${name}.min.css`, scoped)),
+  ];
+
+  const jsModules: string[] = [
+    ...mergedSettings.filter((name) => _allJs.indexOf(name) != -1).map((name) => getJsModule(url, `./settings/${name}.min.js`)),
+    ...mergedHelpers.filter((name) => _allJs.indexOf(name) != -1).map((name) => getJsModule(url, `./helpers/${name}.min.js`)),
+    ...mergedElements.filter((name) => _allJs.indexOf(name) != -1).map((name) => getJsModule(url, `./elements/${name}.min.js`))
+  ]
+
+  const requests: Promise<string>[] = [];
+  for(let module of cssModules) {
+    _urls[module] = _urls[module] || fetch(module)
+      .then((response) => response.ok ? response.text() : "")
+      .catch(() => "")
+    requests.push(_urls[module]);
+  }
+
+  for(let module of jsModules) {
+    _urls[module] = _urls[module] || import(module);
+    requests.push(_urls[module]);
+  }
+
+  const responses = (await Promise.allSettled<any>(requests))
+    .filter((response: any) => !!response.value && typeof response.value == "string")
+    .map((response: any) => response.value);
+
+  let styleElement = document.getElementById(_id);
+  if (styleElement) {
+    styleElement.textContent = responses.join("\n");
+    return styleElement.textContent;
+  }
+  
+  styleElement = document.createElement("style");
+  styleElement.id = _id;
+  styleElement.textContent = responses.join("\n");
+  const scriptElement = document.querySelector("script[src*=beer]");
+  if (scriptElement) scriptElement.insertAdjacentElement("afterend", styleElement);
+  else document.head.appendChild(styleElement);
+  return styleElement.textContent;
+}
+
+export async function importModulesFromQueryString(queryString: string): Promise<string> {
+  const params = new URLSearchParams(queryString);
+  const urlObject = new URL(_url);
+
+  if (params.has("settings")) urlObject.searchParams.set("settings", params.get("settings") || "");
+  if (params.has("elements")) urlObject.searchParams.set("elements", params.get("elements") || "");
+  if (params.has("helpers")) urlObject.searchParams.set("helpers", params.get("helpers") || "");
+  if (params.has("scoped")) urlObject.searchParams.set("scoped", params.get("scoped") || "");
+
+  return importModulesFromUrl(urlObject.href);
 }

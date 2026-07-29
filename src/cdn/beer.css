@@ -1,7 +1,7 @@
-@import "./settings/global.css";
-@import "./settings/light.css";
 @import "./settings/dark.css";
 @import "./settings/font.css";
+@import "./settings/global.css";
+@import "./settings/light.css";
 /* begin scoped */
 @import "./settings/reset.css";
 @import "./settings/theme.css";

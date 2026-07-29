@@ -30,10 +30,11 @@ class BeerCssCustomElement extends HTMLElement {
   
   async load(queryString) {
     if (BeerCssCustomElement.isLoaded) return BeerCssCustomElement.isLoaded;
-    BeerCssCustomElement.isLoaded = import(new URL(`./beer.min.js${queryString}`, _url.href).href);
 
     const params = new URLSearchParams(queryString);
-    if (!params.has("elements") && !params.has("helpers")) {
+    if (!params.has("settings") && !params.has("elements") && !params.has("helpers")) {
+      BeerCssCustomElement.isLoaded = import(new URL(`./beer.min.js`, _url.href).href);
+
       const linkElement = document.createElement("link");
       linkElement.rel = "stylesheet";
       linkElement.href = new URL(`./beer.scoped.min.css`, _url.href).href;
@@ -41,6 +42,8 @@ class BeerCssCustomElement extends HTMLElement {
       const scriptElement = document.querySelector("script[src*=beer]");
       if (scriptElement) scriptElement.insertAdjacentElement("afterend", linkElement);
       else document.head.appendChild(linkElement);
+    } else {
+      BeerCssCustomElement.isLoaded = import(new URL(`./beer.loader.min.js${queryString}`, _url.href).href)
     }
     
     return BeerCssCustomElement.isLoaded;

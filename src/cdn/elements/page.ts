@@ -7,6 +7,6 @@ export function updatePage(page: Element) {
   addClass(page, "active");
 }
 
-globals.page = {
+globals().page = {
   updatePage
 }

@@ -183,6 +183,6 @@ export function updateAllFields() {
   updateAllPasswordIcons();
 }
 
-globals.field = {
+globals().field = {
   updateAllFields
 }

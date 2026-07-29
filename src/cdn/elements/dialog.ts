@@ -70,6 +70,6 @@ export async function updateDialog(from: Element, dialog: HTMLDialogElement): Pr
   else void openDialog(dialog, overlay, isModal, from);
 }
 
-globals.dialog = {
+globals().dialog = {
   updateDialog
 }

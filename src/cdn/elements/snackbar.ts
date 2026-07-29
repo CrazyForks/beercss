@@ -27,6 +27,6 @@ export function updateSnackbar(snackbar: Element, milliseconds?: number) {
   }, milliseconds ?? 6000);
 }
 
-globals.snackbar = {
+globals().snackbar = {
   updateSnackbar
 }

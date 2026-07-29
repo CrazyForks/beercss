@@ -40,6 +40,6 @@ export function updateMenu(from: Element, menu: HTMLMenuElement, e?: Event) {
   }, 90);
 }
 
-globals.menu = {
+globals().menu = {
   updateMenu
 }

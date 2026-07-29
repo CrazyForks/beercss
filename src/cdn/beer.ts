@@ -7,7 +7,7 @@ import "./elements/page";
 import "./elements/progress";
 import "./helpers/ripple";
 import "./settings/theme";
-import ui from "./ui";
+import ui from "./loader";
 
 export {
   ui as default,

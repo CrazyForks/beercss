@@ -32,10 +32,11 @@
   "files": [
     "custom-element",
     "dist/cdn",
-    "scoped",
-    "src/cdn",
     "index.d.ts",
-    "index.js"
+    "index.js",
+    "loader",
+    "scoped",
+    "src/cdn"
   ],
   "keywords": [
     "css",

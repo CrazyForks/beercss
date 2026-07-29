@@ -87,7 +87,7 @@ export function updateMode(value: string): string {
   return getMode();
 }
 
-globals.theme = {
+globals().theme = {
   updateTheme,
   updateMode
 }

@@ -74,6 +74,6 @@ export function updateAllSliders() {
   updateAllRanges();
 }
 
-globals.slider = {
+globals().slider = {
   updateAllSliders
 }

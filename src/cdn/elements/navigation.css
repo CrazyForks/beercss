@@ -378,6 +378,7 @@ nav.toolbar.max {
 
 nav.group {
   background: none !important;
+  color: var(--on-background) !important;
 }
 
 nav.group > :is(.button, button) {

@@ -185,38 +185,49 @@
   color: var(--on-surface-variant) !important;
 }
 
-nav.primary-container > button,
-:is(nav, menu).primary > :is(button, a, li).active {
+.primary-container > button,
+.primary > a.active > i,
+.primary > :is(button, a, li).active {
   background-color: var(--primary-container) !important;
   color: var(--on-primary-container) !important;
 }
 
-nav.primary > button,
-:is(nav, menu).primary-container > :is(button, a, li).active {
+.primary > button,
+.primary-container > a.active > i,
+.primary-container > :is(button, a, li).active {
   background-color: var(--primary) !important;
   color: var(--on-primary) !important;
 }
 
-nav.secondary-container > button,
-:is(nav, menu).secondary > :is(button, a, li).active {
+.secondary-container > button,
+.secondary > a.active > i,
+.secondary > :is(button, a, li).active {
   background-color: var(--secondary-container) !important;
   color: var(--on-secondary-container) !important;
 }
 
-nav.secondary > button,
-:is(nav, menu).secondary-container > :is(button, a, li).active {
+.secondary > button,
+.secondary-container > a.active > i,
+.secondary-container > :is(button, a, li).active {
   background-color: var(--secondary) !important;
   color: var(--on-secondary) !important;
 }
 
-nav.tertiary-container > button,
-:is(nav, menu).tertiary > :is(button, a, li).active {
+.tertiary-container > button,
+.tertiary > a.active > i,
+.tertiary > :is(button, a, li).active {
   background-color: var(--tertiary-container) !important;
   color: var(--on-tertiary-container) !important;
 }
 
-nav.tertiary > button,
-:is(nav, menu).tertiary-container > :is(button, a, li).active {
+.tertiary > button,
+.tertiary-container > a.active > i,
+.tertiary-container > :is(button, a, li).active {
   background-color: var(--tertiary) !important;
   color: var(--on-tertiary) !important;
+}
+
+nav:is(.left, .right, .bottom, .top):not(.max) > a.active {
+  background: none !important;
+  color: inherit !important;
 }

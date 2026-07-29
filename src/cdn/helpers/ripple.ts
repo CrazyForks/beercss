@@ -51,6 +51,6 @@ export function updateAllRipples() {
   onWeak(body, "keydown", onKeydownRippleDelegation);
 }
 
-globals.ripple = {
+globals().ripple = {
   updateAllRipples
 }

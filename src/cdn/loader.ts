@@ -1,7 +1,6 @@
 import globals from "./globals";
 import { type IBeerCssTheme } from "./interfaces";
-import { addClass, guid, hasClass, hasTag, onWeak, query, removeClass, updateAllClickable } from "./utils";
-import { importModulesFromUrl, importModulesFromQueryString } from "./modules";
+import { addClass, guid, hasClass, hasTag, onWeak, query, removeClass, updateAllClickable, importModulesFromUrl, importModulesFromQueryString } from "./utils";
 
 const _url = import.meta.url;
 const _context = globalThis as any;
@@ -25,22 +24,22 @@ async function run(from: Element, to: Element | null, options?: any, e?: Event):
   updateAllClickable(from);
 
   if (hasTag(to, "dialog")) {
-    requestAnimationFrame(() => globals.dialog?.updateDialog(from, to as HTMLDialogElement));
+    requestAnimationFrame(() => globals().dialog?.updateDialog(from, to as HTMLDialogElement));
     return;
   }
 
   if (hasTag(to, "menu")) {
-    requestAnimationFrame(() => globals.menu?.updateMenu(from, to as HTMLMenuElement, e));
+    requestAnimationFrame(() => globals().menu?.updateMenu(from, to as HTMLMenuElement, e));
     return;
   }
 
   if (hasClass(to, "snackbar")) {
-    requestAnimationFrame(() => globals.snackbar?.updateSnackbar(to, options as number));
+    requestAnimationFrame(() => globals().snackbar?.updateSnackbar(to, options as number));
     return;
   }
 
   if (hasClass(to, "page")) {
-    requestAnimationFrame(() => globals.page?.updatePage(to));
+    requestAnimationFrame(() => globals().page?.updatePage(to));
     return;
   }
 
@@ -82,8 +81,8 @@ function _ui(selector?: string | Element, options?: string | number | IBeerCssTh
   if (selector) {
     if (selector === "setup") { setup(); return; }
     if (selector === "guid") return guid();
-    if (selector === "mode") return globals.theme?.updateMode(options as string);
-    if (selector === "theme") return globals.theme?.updateTheme(options);
+    if (selector === "mode") return globals().theme?.updateMode(options as string);
+    if (selector === "theme") return globals().theme?.updateTheme(options);
     if (selector === "import") { importModulesFromQueryString(options as string); return; }
 
     const to = query(selector);
@@ -92,17 +91,17 @@ function _ui(selector?: string | Element, options?: string | number | IBeerCssTh
   }
 
   updateAllDataUis();
-  globals.field?.updateAllFields();
-  globals.ripple?.updateAllRipples();
-  globals.slider?.updateAllSliders();
-  globals.progress?.updateAllProgress();
+  globals().field?.updateAllFields();
+  globals().ripple?.updateAllRipples();
+  globals().slider?.updateAllSliders();
+  globals().progress?.updateAllProgress();
 }
 
 function start() {
   if (_context.ui) return;
 
   const body = _context.document?.body;
-  if (body && !body.classList.contains("dark") && !body.classList.contains("light")) globals.theme?.updateMode("auto");
+  if (body && !body.classList.contains("dark") && !body.classList.contains("light")) globals().theme?.updateMode("auto");
 
   setup();
   _context.ui = _ui;
@@ -112,6 +111,7 @@ importModulesFromUrl(_url);
 start();
 
 const ui = _context.ui;
+globals().ui = ui;
 export {
   ui as default,
   ui,
