@@ -189,6 +189,14 @@ export function getJsModule(url: string, path: string): string {
   return new URL(path, url).href;
 }
 
+export function hasJs(name: string): boolean {
+  return _allJs.indexOf(name) != -1;
+}
+
+export function getScriptElement() {
+  return Array.from(document.querySelectorAll("script[type=module]")).find(x => (x.getAttribute("src") || x.innerHTML).indexOf("beer.") != -1);
+}
+
 export async function importModulesFromUrl(url?: string): Promise<string> {
   url = url || _url?.href;
   if (!url) return "";
@@ -226,9 +234,9 @@ export async function importModulesFromUrl(url?: string): Promise<string> {
   ];
 
   const jsModules: string[] = [
-    ...mergedSettings.filter((name) => _allJs.indexOf(name) != -1).map((name) => getJsModule(url, `./settings/${name}.min.js`)),
-    ...mergedHelpers.filter((name) => _allJs.indexOf(name) != -1).map((name) => getJsModule(url, `./helpers/${name}.min.js`)),
-    ...mergedElements.filter((name) => _allJs.indexOf(name) != -1).map((name) => getJsModule(url, `./elements/${name}.min.js`))
+    ...mergedSettings.filter(hasJs).map((name) => getJsModule(url, `./settings/${name}.min.js`)),
+    ...mergedHelpers.filter(hasJs).map((name) => getJsModule(url, `./helpers/${name}.min.js`)),
+    ...mergedElements.filter(hasJs).map((name) => getJsModule(url, `./elements/${name}.min.js`))
   ]
 
   const requests: Promise<string>[] = [];
@@ -257,7 +265,7 @@ export async function importModulesFromUrl(url?: string): Promise<string> {
   styleElement = document.createElement("style");
   styleElement.id = _id;
   styleElement.textContent = responses.join("\n");
-  const scriptElement = document.querySelector("script[src*=beer]");
+  const scriptElement = getScriptElement();
   if (scriptElement) scriptElement.insertAdjacentElement("afterend", styleElement);
   else document.head.appendChild(styleElement);
   return styleElement.textContent;

@@ -23,36 +23,37 @@ The module version loads the [Settings](SETTINGS.md) , [Elements](ELEMENTS.md) a
 
 ### DEFAULT VERSION
 
-**Method 1 - Query string**
+**Query string**
 
 ```html
 <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.loader.js?elements=button,dialog&helpers=form"></script>
 ```
 
-**Method 2 - Direct import**
-```css
-@import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/settings/all.css";
-@import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/helpers/form.css";
-@import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/elements/button.css";
-@import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/elements/dialog.css";
-```
-
-```js
-import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/elements/dialog.js";
-import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.loader.js";
-```
-
-**Method 3 - The `ui()` function**
+**Direct import**
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.loader.js"></script>
+<style>
+  @import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/settings/all.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/helpers/form.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/elements/button.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/elements/dialog.css";
+</style>
+<script type="module">
+  import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/elements/dialog.js";
+  import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.loader.js";
+</script>
 ```
 
-```js
-ui("import", "elements=button,dialog&helpers=form")
+**The `ui()` function**
+
+```html
+<script type="module">
+  import ui from "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.loader.js";
+  ui("import", "elements=button,dialog&helpers=form");
+</script>
 ```
 
-**Method 4 - Bundler import**
+**Bundler import (we recommend [Vite](https://vite.dev/))**
 
 ```js
 npm i beercss
@@ -69,36 +70,37 @@ import "beercss/loader";
 
 ### SCOPED VERSION
 
-**Method 1 - Query string**
+**Query string**
 
 ```html
 <script type="module" src="https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.loader.js?elements=button,dialog&helpers=form&scoped=1"></script>
 ```
 
-**Method 2 - Direct import**
-```css
-@import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/settings/all.scoped.css";
-@import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/helpers/form.scoped.css";
-@import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/elements/button.scoped.css";
-@import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/elements/dialog.scoped.css";
-```
-
-```js
-import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/elements/dialog.js";
-import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.loader.js";
-```
-
-**Method 3 - The `ui()` function**
+**Direct import**
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.loader.js"></script>
+<style>
+  @import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/settings/all.scoped.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/helpers/form.scoped.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/elements/button.scoped.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/elements/dialog.scoped.css";
+</style>
+<script type="module">
+  import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/elements/dialog.js";
+  import "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.loader.js";
+</script>
 ```
 
-```js
-ui("import", "elements=button,dialog&helpers=form&scoped=1")
+**The `ui()` function**
+
+```html
+<script type="module">
+  import ui from "https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.loader.js";
+  ui("import", "elements=button,dialog&helpers=form&scoped=1");
+</script>
 ```
 
-**Method 4 - Bundler import**
+**Bundler import (we recommend [Vite](https://vite.dev/))**
 
 ```js
 npm i beercss
@@ -117,16 +119,16 @@ import "beercss/loader";
 
 The custom element is scoped by default. Note the empty query string params on Method 2.
 
-**Method 1 - Query string**
+**Query string**
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.custom-element.min.js?elements=button,dialog&helpers=form"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.custom-element.js?elements=button,dialog&helpers=form"></script>
 ```
 
-**Method 2 - The `import` attribute**
+**The `import` attribute**
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.custom-element.min.js?settings=&elements=&helpers="></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@4.0.23/dist/cdn/beer.custom-element.js?settings=&elements=&helpers="></script>
 
 <beer-css import="elements=button&dialog&helpers=form">...</beer-css>
 ```
