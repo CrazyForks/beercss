@@ -1,7 +1,6 @@
+# Modules
 
-# Module version
-
-The module version loads the [Settings](SETTINGS.md) , [Elements](ELEMENTS.md) and [Helpers](HELPERS.md) as modules. You can load modules by **direct import** or by **query string** (`settings=&elements=&helpers=&scoped=`). If a query string parameter is omitted, all modules for the omitted parameter will be loaded. If a query string parameter is informed, but empty, no modules will be loaded for the empty parameter. All CSS modules has `*.css`, `*.min.css`, `*.scoped.css` and `*.scoped.min.css` files. All JS modules has `*.js` and `*.min.js` files. Query string supports `beer.loader.js`, `beer.loader.min.js` `beer.customElement.js` and `beer.customElement.min.js` files.
+Use the [Settings](SETTINGS.md) , [Elements](ELEMENTS.md) and [Helpers](HELPERS.md) as modules. You can load modules by **direct import** or by **query string** (`settings=&elements=&helpers=&scoped=`). If a query string parameter is omitted, all modules for the omitted parameter will be loaded. If a query string parameter is informed, but empty, no modules will be loaded for the empty parameter. All CSS modules has `*.css`, `*.min.css`, `*.scoped.css` and `*.scoped.min.css` files. All JS modules has `*.js` and `*.min.js` files. Query string supports `beer.loader.js`, `beer.loader.min.js` `beer.customElement.js` and `beer.customElement.min.js` files.
 
 ### SETTINGS
 
