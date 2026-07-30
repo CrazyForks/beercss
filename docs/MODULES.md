@@ -6,19 +6,19 @@ Use the [Settings](SETTINGS.md) , [Elements](ELEMENTS.md) and [Helpers](HELPERS.
 
 **Query string:** global, light, dark, font, reset, theme
 
-**Direct import:** https://cdn.jsdelivr.net/npm/beercss@5.0.0/dist/cdn/settings
+**Direct import:** https://cdn.jsdelivr.net/npm/beercss@5.0.0/dist/cdn/settings/
 
 ### ELEMENTS
 
 **Query string:** badge, bar, button, card, chip, dialog, divider, expansion, field, grid, icon, layout, list, mainLayout, media, menu, navigation, overlay, page, progress, selection, shape, slider, snackbar, tab, table, tooltip, typography
 
-**Direct import:** https://cdn.jsdelivr.net/npm/beercss@5.0.0/dist/cdn/elements
+**Direct import:** https://cdn.jsdelivr.net/npm/beercss@5.0.0/dist/cdn/elements/
 
 ### HELPERS
 
 **Query string:** alignment, blur, color, direction, elevate, form, margin, opacity, padding, position, responsive, ripple, scroll, shadow, size, space, wave, zoom
 
-**Direct import:** https://cdn.jsdelivr.net/npm/beercss@5.0.0/dist/cdn/helpers
+**Direct import:** https://cdn.jsdelivr.net/npm/beercss@5.0.0/dist/cdn/helpers/
 
 ### DEFAULT VERSION
 
