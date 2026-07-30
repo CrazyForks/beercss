@@ -5,7 +5,7 @@
   .medium-space
   h5.h6
     span Main content
-    button.chip.circle(@click="domain.showSamples(data, '#main-content main', 'Main content', null, 'https://github.com/beercss/beercss/blob/main/docs/CONTAINER.md')")
+    button.chip.circle(@click="domain.showSamples(data, '#main-content main', 'Main content', null, 'https://github.com/beercss/beercss/blob/main/docs/MAIN_LAYOUT.md')")
       i code
   nav
     button.chip(@click="domain.updateResponsive('main', '')") Default
@@ -16,7 +16,7 @@
   .medium-space
   h5.h6
     span Side content
-    button.chip.circle(@click="domain.showSamples(data, '#containers .grid > div > div', 'Side content', null, 'https://github.com/beercss/beercss/blob/main/docs/CONTAINER.md')")
+    button.chip.circle(@click="domain.showSamples(data, '#containers .grid > div > div', 'Side content', null, 'https://github.com/beercss/beercss/blob/main/docs/MAIN_LAYOUT.md')")
       i code
   .grid
     .s12.m6.l6

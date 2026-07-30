@@ -325,9 +325,3 @@ Hi! We are really excited that you are interested in contributing to Beer CSS! B
 # License
 
 [MIT](https://opensource.org/licenses/MIT)
-
-# Cheers to all stargazers 🍻
-[![Stargazers repo roster for @beercss/beercss](https://reporoster.com/stars/notext/beercss/beercss)](https://github.com/beercss/beercss/stargazers)
-
-### Stargazers over time
-[![Stargazers over time](https://starchart.cc/beercss/beercss.svg?variant=adaptive)](https://starchart.cc/beercss/beercss)

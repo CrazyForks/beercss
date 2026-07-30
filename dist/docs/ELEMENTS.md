@@ -20,10 +20,6 @@ Checkboxes allow users to select one or more items from a set. Checkboxes can tu
 
 Chips are compact elements that represent an input, attribute, or action.
 
-## [Container](CONTAINER.md)
-
-A container is the main content of page.
-
 ## [Dialog](DIALOG.md)
 
 Dialogs inform users about a task and can contain critical information, required decisions, involve multiple tasks, provide access to destinations in your app and contain a small forms to submit.

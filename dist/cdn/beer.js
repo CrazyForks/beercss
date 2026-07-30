@@ -1,4 +1,86 @@
+//#region src/cdn/globals.ts
+var _context$1 = globalThis;
+_context$1.__BeerCssGlobals__ = _context$1.__BeerCssGlobals__ || {};
+var globals_default = () => {
+	return _context$1.__BeerCssGlobals__;
+};
+//#endregion
 //#region src/cdn/utils.ts
+var _settings = [];
+var _elements = [];
+var _helpers = [];
+var _urls = {};
+var _url$1 = new URL(import.meta.url);
+var _id = "__BeerCssStyleTag__";
+var _allSettings = [
+	"global",
+	"light",
+	"dark",
+	"font",
+	"reset",
+	"theme"
+];
+var _allElements = [
+	"badge",
+	"bar",
+	"button",
+	"card",
+	"chip",
+	"dialog",
+	"divider",
+	"expansion",
+	"field",
+	"grid",
+	"icon",
+	"layout",
+	"list",
+	"mainLayout",
+	"media",
+	"menu",
+	"navigation",
+	"overlay",
+	"page",
+	"progress",
+	"selection",
+	"shape",
+	"slider",
+	"snackbar",
+	"tab",
+	"table",
+	"tooltip",
+	"typography"
+];
+var _allHelpers = [
+	"alignment",
+	"blur",
+	"color",
+	"direction",
+	"elevate",
+	"form",
+	"margin",
+	"opacity",
+	"padding",
+	"position",
+	"responsive",
+	"ripple",
+	"scroll",
+	"shadow",
+	"size",
+	"space",
+	"wave",
+	"zoom"
+];
+var _allJs = [
+	"dialog",
+	"field",
+	"menu",
+	"page",
+	"progress",
+	"ripple",
+	"slider",
+	"snackbar",
+	"theme"
+];
 var _emptyNodeList = [];
 var _weakMap = /* @__PURE__ */ new WeakMap();
 var isChrome = navigator.userAgent.includes("Chrome");
@@ -88,6 +170,9 @@ function next(element) {
 function parent(element) {
 	return element?.parentElement;
 }
+function closest(element, selector) {
+	return element?.closest(selector);
+}
 function create(htmlAttributesAsJson) {
 	const element = document.createElement("div");
 	for (let i = 0, keys = Object.keys(htmlAttributesAsJson), n = keys.length; i < n; i++) {
@@ -108,20 +193,93 @@ function queryDataUi(id) {
 }
 function updateAllClickable(element) {
 	if (element.id && hasClass(element, "page")) element = queryDataUi(element.id) ?? element;
-	const container = parent(element);
-	if (!hasClass(container, "tabs") && !hasClass(container, "tabbed") && !hasTag(container, "nav")) return;
-	const as = queryAll("a", container);
-	for (let i = 0; i < as.length; i++) removeClass(as[i], "active");
+	const container = closest(element, ".tabs, nav");
+	if (!container) return;
+	removeClass(queryAll("a", container), "active");
 	if (!hasTag(element, "button") && !hasClass(element, "button") && !hasClass(element, "chip")) addClass(element, "active");
 }
 function rootSizeInPixels() {
-	const size = getComputedStyle(document.documentElement).getPropertyValue("--size") || "16px";
+	const rootElement = query(".beer") || document.documentElement;
+	const size = getComputedStyle(rootElement).getPropertyValue("--size") || "16px";
 	if (size.includes("%")) return parseInt(size) * 16 / 100;
 	if (size.includes("em")) return parseInt(size) * 16;
 	return parseInt(size);
 }
+function getCssModule(url, path, scoped) {
+	return new URL(scoped ? path.replace(".min.css", ".scoped.min.css") : path, url).href;
+}
+function getJsModule(url, path) {
+	return new URL(path, url).href;
+}
+function hasJs(name) {
+	return _allJs.indexOf(name) != -1;
+}
+function getScriptElement() {
+	return Array.from(document.querySelectorAll("script[type=module]")).find((x) => (x.getAttribute("src") || x.innerHTML).indexOf("beer.") != -1);
+}
+async function importModulesFromUrl(url) {
+	url = url || _url$1?.href;
+	if (!url) return "";
+	const params = new URL(url).searchParams;
+	const settings = params.get("settings")?.split(",")?.filter(Boolean) || [];
+	const elements = params.get("elements")?.split(",")?.filter(Boolean) || [];
+	const helpers = params.get("helpers")?.split(",")?.filter(Boolean) || [];
+	const scoped = !!params.get("scoped");
+	if (!settings.length && !elements.length && !helpers.length) return "";
+	const mergedSettings = params.has("settings") ? Array.from(/* @__PURE__ */ new Set([...settings, ..._settings])).sort() : _allSettings;
+	const mergedElements = params.has("elements") ? Array.from(/* @__PURE__ */ new Set([...elements, ..._elements])).sort() : _allElements;
+	const mergedHelpers = params.has("helpers") ? Array.from(/* @__PURE__ */ new Set([...helpers, ..._helpers])).sort() : _allHelpers;
+	if (mergedSettings.length == _settings.length && mergedElements.length == _elements.length && mergedHelpers.length == _helpers.length) return "";
+	_settings = mergedSettings;
+	_elements = mergedElements;
+	_helpers = mergedHelpers;
+	const cssModules = [
+		...mergedSettings.map((name) => getCssModule(url, `./settings/${name}.min.css`, scoped)),
+		...mergedHelpers.map((name) => getCssModule(url, `./helpers/${name}.min.css`, scoped)),
+		...mergedElements.map((name) => getCssModule(url, `./elements/${name}.min.css`, scoped))
+	];
+	const jsModules = [
+		...mergedSettings.filter(hasJs).map((name) => getJsModule(url, `./settings/${name}.min.js`)),
+		...mergedHelpers.filter(hasJs).map((name) => getJsModule(url, `./helpers/${name}.min.js`)),
+		...mergedElements.filter(hasJs).map((name) => getJsModule(url, `./elements/${name}.min.js`))
+	];
+	const requests = [];
+	for (let module of cssModules) {
+		_urls[module] = _urls[module] || fetch(module).then((response) => response.ok ? response.text() : "").catch(() => "");
+		requests.push(_urls[module]);
+	}
+	for (let module of jsModules) {
+		_urls[module] = _urls[module] || import(
+			/* @vite-ignore */
+			module
+);
+		requests.push(_urls[module]);
+	}
+	const responses = (await Promise.allSettled(requests)).filter((response) => !!response.value && typeof response.value == "string").map((response) => response.value);
+	let styleElement = document.getElementById(_id);
+	if (styleElement) {
+		styleElement.textContent = responses.join("\n");
+		return styleElement.textContent;
+	}
+	styleElement = document.createElement("style");
+	styleElement.id = _id;
+	styleElement.textContent = responses.join("\n");
+	const scriptElement = getScriptElement();
+	if (scriptElement) scriptElement.insertAdjacentElement("afterend", styleElement);
+	else document.head.appendChild(styleElement);
+	return styleElement.textContent;
+}
+async function importModulesFromQueryString(queryString) {
+	const params = new URLSearchParams(queryString);
+	const urlObject = new URL(_url$1);
+	if (params.has("settings")) urlObject.searchParams.set("settings", params.get("settings") || "");
+	if (params.has("elements")) urlObject.searchParams.set("elements", params.get("elements") || "");
+	if (params.has("helpers")) urlObject.searchParams.set("helpers", params.get("helpers") || "");
+	if (params.has("scoped")) urlObject.searchParams.set("scoped", params.get("scoped") || "");
+	return importModulesFromUrl(urlObject.href);
+}
 //#endregion
-//#region src/cdn/elements/fields.ts
+//#region src/cdn/elements/field.ts
 function updatePlaceholder(element) {
 	if (!element.placeholder) element.placeholder = " ";
 }
@@ -275,8 +433,9 @@ function updateAllFields() {
 	updateAllTextareas();
 	updateAllPasswordIcons();
 }
+globals_default().field = { updateAllFields };
 //#endregion
-//#region src/cdn/elements/sliders.ts
+//#region src/cdn/elements/slider.ts
 function onInputDocument$1(e) {
 	const input = e.target;
 	if (!hasTag(input, "input") && !hasTag(input, "select")) return;
@@ -334,6 +493,198 @@ function updateRange(input) {
 function updateAllSliders() {
 	updateAllRanges();
 }
+globals_default().slider = { updateAllSliders };
+//#endregion
+//#region src/cdn/elements/dialog.ts
+var _dialogs = [];
+function onKeydownDialog(e) {
+	if (e.key === "Escape") {
+		const dialog = e.currentTarget;
+		updateDialog(dialog, dialog);
+	}
+}
+function focusOnDialogOrElement(dialog) {
+	(query("[autofocus]", dialog) ?? dialog).focus();
+}
+function closeDialog(dialog, overlay) {
+	removeClass(queryAllDataUi(dialog.id), "active");
+	removeClass(dialog, "active");
+	removeClass(overlay, "active");
+	dialog.close();
+	const index = _dialogs.indexOf(dialog);
+	if (index > -1) _dialogs.splice(index, 1);
+	const previousDialog = _dialogs[_dialogs.length - 1];
+	if (previousDialog) previousDialog.focus();
+}
+async function openDialog(dialog, overlay, isModal, from) {
+	if (!hasTag(from, "button") && !hasClass(from, "button") && !hasClass(from, "chip")) addClass(from, "active");
+	addClass(overlay, "active");
+	addClass(dialog, "active");
+	if (isModal) dialog.showModal();
+	else dialog.show();
+	await wait(90);
+	if (!isModal) on(dialog, "keydown", onKeydownDialog, false);
+	_dialogs.push(dialog);
+	focusOnDialogOrElement(dialog);
+}
+function onClickOverlay(e) {
+	const overlay = e.currentTarget;
+	const dialog = next(overlay);
+	if (hasTag(dialog, "dialog")) closeDialog(dialog, overlay);
+}
+async function updateDialog(from, dialog) {
+	blurActiveElement();
+	let overlay = prev(dialog);
+	const isActive = hasClass(dialog, "active") || dialog.open;
+	const isModal = hasClass(dialog, "modal");
+	if (!isModal) off(dialog, "keydown", onKeydownDialog, false);
+	if (!hasClass(overlay, "overlay")) {
+		overlay = create({ class: "overlay" });
+		insertBefore(overlay, dialog);
+		await wait(90);
+	}
+	if (!isModal) onWeak(overlay, "click", onClickOverlay, false);
+	if (isActive) closeDialog(dialog, overlay);
+	else openDialog(dialog, overlay, isModal, from);
+}
+globals_default().dialog = { updateDialog };
+//#endregion
+//#region src/cdn/elements/menu.ts
+var _timeoutMenu;
+function onClickDocument(e) {
+	off(document.body, "click", onClickDocument);
+	const body = e.target;
+	const menus = queryAll("menu.active");
+	for (let i = 0; i < menus.length; i++) updateMenu(body, menus[i], e);
+}
+function focusOnMenuOrInput(menu) {
+	setTimeout(() => {
+		const input = query(".field > input", menu);
+		if (input) input.focus();
+		else menu.focus();
+	}, 90);
+}
+function updateMenu(from, menu, e) {
+	if (_timeoutMenu) clearTimeout(_timeoutMenu);
+	_timeoutMenu = setTimeout(() => {
+		on(document.body, "click", onClickDocument);
+		if (!hasTag(document.activeElement, "input")) blurActiveElement();
+		const isActive = hasClass(menu, "active");
+		const isEvent = e?.target === from;
+		const isChild = !!from.closest("menu");
+		if (!isActive && isChild || isActive && isEvent) {
+			removeClass(menu, "active");
+			return;
+		}
+		removeClass(queryAll("menu.active"), "active");
+		addClass(menu, "active");
+		focusOnMenuOrInput(menu);
+	}, 90);
+}
+globals_default().menu = { updateMenu };
+//#endregion
+//#region src/cdn/elements/snackbar.ts
+var _timeoutSnackbar;
+function onClickSnackbar(e) {
+	const snackbar = e.currentTarget;
+	removeClass(snackbar, "active");
+	if (_timeoutSnackbar) clearTimeout(_timeoutSnackbar);
+}
+function updateSnackbar(snackbar, milliseconds) {
+	blurActiveElement();
+	removeClass(queryAll(".snackbar.active"), "active");
+	addClass(snackbar, "active");
+	onWeak(snackbar, "click", onClickSnackbar);
+	if (_timeoutSnackbar) clearTimeout(_timeoutSnackbar);
+	if (milliseconds === -1) return;
+	_timeoutSnackbar = setTimeout(() => {
+		removeClass(snackbar, "active");
+	}, milliseconds ?? 6e3);
+}
+globals_default().snackbar = { updateSnackbar };
+//#endregion
+//#region src/cdn/elements/page.ts
+function updatePage(page) {
+	const container = parent(page);
+	if (container) removeClass(queryAll(":scope > .page", container), "active");
+	addClass(page, "active");
+}
+globals_default().page = { updatePage };
+//#endregion
+//#region src/cdn/elements/progress.ts
+function onInputDocument(e) {
+	const progress = e.target;
+	if (hasTag(progress, "progress")) updateProgress(progress);
+	else updateAllProgress();
+}
+function updateProgress(progress) {
+	requestAnimationFrame(() => {
+		if (!progress.hasAttribute("value") && !progress.hasAttribute("max")) {
+			const value = hasClass(progress, "circle") ? "50" : "100";
+			progress.style.setProperty("--_value", value);
+			progress.setAttribute("value", value);
+			progress.setAttribute("max", "100");
+			progress.classList.add("indeterminate");
+		} else progress.style.setProperty("--_value", String(progress.value));
+	});
+}
+function updateAllProgress() {
+	if (isChrome && !isMac && !isIOS) return;
+	const body = document.body;
+	const progresses = queryAll("progress");
+	if (!progresses.length) off(body, "input", onInputDocument, false);
+	else on(body, "input", onInputDocument, false);
+	for (let i = 0; i < progresses.length; i++) updateProgress(progresses[i]);
+}
+globals_default().progress = { updateAllProgress };
+//#endregion
+//#region src/cdn/helpers/ripple.ts
+function onAnimationendRipple(e) {
+	e.currentTarget.parentElement?.remove();
+}
+function updateRipple(e) {
+	const isMouseEvent = e instanceof MouseEvent;
+	const element = e.currentTarget;
+	const rect = element.getBoundingClientRect();
+	const diameter = Math.max(rect.width, rect.height);
+	const radius = diameter / 2;
+	const x = isMouseEvent ? e.clientX - rect.left - radius : rect.width / 2 - radius;
+	const y = isMouseEvent ? e.clientY - rect.top - radius : rect.height / 2 - radius;
+	const rippleContainer = document.createElement("div");
+	rippleContainer.className = "ripple-js";
+	const ripple = document.createElement("div");
+	ripple.style.inlineSize = ripple.style.blockSize = `${diameter}px`;
+	ripple.style.left = `${x}px`;
+	ripple.style.top = `${y}px`;
+	onWeak(ripple, "animationend", onAnimationendRipple);
+	rippleContainer.appendChild(ripple);
+	element.appendChild(rippleContainer);
+}
+function onMousedownRippleDelegation(e) {
+	const from = e.target.closest(".slow-ripple, .ripple, .fast-ripple");
+	if (!from) return;
+	Object.defineProperty(e, "currentTarget", {
+		value: from,
+		configurable: true
+	});
+	updateRipple(e);
+}
+function onKeydownRippleDelegation(e) {
+	const from = e.target.closest(".slow-ripple, .ripple, .fast-ripple");
+	if (!from || e.key !== " ") return;
+	Object.defineProperty(e, "currentTarget", {
+		value: from,
+		configurable: true
+	});
+	updateRipple(e);
+}
+function updateAllRipples() {
+	const body = document.body;
+	if (!body) return;
+	onWeak(body, "mousedown", onMousedownRippleDelegation);
+	onWeak(body, "keydown", onKeydownRippleDelegation);
+}
+globals_default().ripple = { updateAllRipples };
 //#endregion
 //#region src/cdn/settings/theme.ts
 var _lastTheme = {
@@ -444,194 +795,13 @@ function updateMode(value) {
 	if (context.materialDynamicColors) body.setAttribute("style", lastThemeStyle);
 	return getMode();
 }
+globals_default().theme = {
+	updateTheme,
+	updateMode
+};
 //#endregion
-//#region src/cdn/elements/dialogs.ts
-var _dialogs = [];
-function onKeydownDialog(e) {
-	if (e.key === "Escape") {
-		const dialog = e.currentTarget;
-		updateDialog(dialog, dialog);
-	}
-}
-function focusOnDialogOrElement(dialog) {
-	(query("[autofocus]", dialog) ?? dialog).focus();
-}
-function closeDialog(dialog, overlay) {
-	removeClass(queryAllDataUi(dialog.id), "active");
-	removeClass(dialog, "active");
-	removeClass(overlay, "active");
-	dialog.close();
-	const index = _dialogs.indexOf(dialog);
-	if (index > -1) _dialogs.splice(index, 1);
-	const previousDialog = _dialogs[_dialogs.length - 1];
-	if (previousDialog) previousDialog.focus();
-}
-async function openDialog(dialog, overlay, isModal, from) {
-	if (!hasTag(from, "button") && !hasClass(from, "button") && !hasClass(from, "chip")) addClass(from, "active");
-	addClass(overlay, "active");
-	addClass(dialog, "active");
-	if (isModal) dialog.showModal();
-	else dialog.show();
-	await wait(90);
-	if (!isModal) on(dialog, "keydown", onKeydownDialog, false);
-	_dialogs.push(dialog);
-	focusOnDialogOrElement(dialog);
-}
-function onClickOverlay(e) {
-	const overlay = e.currentTarget;
-	const dialog = next(overlay);
-	if (hasTag(dialog, "dialog")) closeDialog(dialog, overlay);
-}
-async function updateDialog(from, dialog) {
-	blurActiveElement();
-	let overlay = prev(dialog);
-	const isActive = hasClass(dialog, "active") || dialog.open;
-	const isModal = hasClass(dialog, "modal");
-	if (!isModal) off(dialog, "keydown", onKeydownDialog, false);
-	if (!hasClass(overlay, "overlay")) {
-		overlay = create({ class: "overlay" });
-		insertBefore(overlay, dialog);
-		await wait(90);
-	}
-	if (!isModal) onWeak(overlay, "click", onClickOverlay, false);
-	if (isActive) closeDialog(dialog, overlay);
-	else openDialog(dialog, overlay, isModal, from);
-}
-//#endregion
-//#region src/cdn/elements/menus.ts
-var _timeoutMenu;
-function onClickDocument(e) {
-	off(document.body, "click", onClickDocument);
-	const body = e.target;
-	const menus = queryAll("menu.active");
-	for (let i = 0; i < menus.length; i++) updateMenu(body, menus[i], e);
-}
-function focusOnMenuOrInput(menu) {
-	setTimeout(() => {
-		const input = query(".field > input", menu);
-		if (input) input.focus();
-		else menu.focus();
-	}, 90);
-}
-function updateMenu(from, menu, e) {
-	if (_timeoutMenu) clearTimeout(_timeoutMenu);
-	_timeoutMenu = setTimeout(() => {
-		on(document.body, "click", onClickDocument);
-		if (!hasTag(document.activeElement, "input")) blurActiveElement();
-		const isActive = hasClass(menu, "active");
-		const isEvent = e?.target === from;
-		const isChild = !!from.closest("menu");
-		if (!isActive && isChild || isActive && isEvent) {
-			removeClass(menu, "active");
-			return;
-		}
-		removeClass(queryAll("menu.active"), "active");
-		addClass(menu, "active");
-		focusOnMenuOrInput(menu);
-	}, 90);
-}
-//#endregion
-//#region src/cdn/elements/snackbars.ts
-var _timeoutSnackbar;
-function onClickSnackbar(e) {
-	const snackbar = e.currentTarget;
-	removeClass(snackbar, "active");
-	if (_timeoutSnackbar) clearTimeout(_timeoutSnackbar);
-}
-function updateSnackbar(snackbar, milliseconds) {
-	blurActiveElement();
-	const activeSnackbars = queryAll(".snackbar.active");
-	for (let i = 0; i < activeSnackbars.length; i++) removeClass(activeSnackbars[i], "active");
-	addClass(snackbar, "active");
-	onWeak(snackbar, "click", onClickSnackbar);
-	if (_timeoutSnackbar) clearTimeout(_timeoutSnackbar);
-	if (milliseconds === -1) return;
-	_timeoutSnackbar = setTimeout(() => {
-		removeClass(snackbar, "active");
-	}, milliseconds ?? 6e3);
-}
-//#endregion
-//#region src/cdn/elements/pages.ts
-function updatePage(page) {
-	const container = parent(page);
-	if (container) removeClass(queryAll(":scope > .page", container), "active");
-	addClass(page, "active");
-}
-//#endregion
-//#region src/cdn/helpers/ripples.ts
-function onAnimationendRipple(e) {
-	e.currentTarget.parentElement?.remove();
-}
-function updateRipple(e) {
-	const isMouseEvent = e instanceof MouseEvent;
-	const element = e.currentTarget;
-	const rect = element.getBoundingClientRect();
-	const diameter = Math.max(rect.width, rect.height);
-	const radius = diameter / 2;
-	const x = isMouseEvent ? e.clientX - rect.left - radius : rect.width / 2 - radius;
-	const y = isMouseEvent ? e.clientY - rect.top - radius : rect.height / 2 - radius;
-	const rippleContainer = document.createElement("div");
-	rippleContainer.className = "ripple-js";
-	const ripple = document.createElement("div");
-	ripple.style.inlineSize = ripple.style.blockSize = `${diameter}px`;
-	ripple.style.left = `${x}px`;
-	ripple.style.top = `${y}px`;
-	onWeak(ripple, "animationend", onAnimationendRipple);
-	rippleContainer.appendChild(ripple);
-	element.appendChild(rippleContainer);
-}
-function onMousedownRippleDelegation(e) {
-	const from = e.target.closest(".slow-ripple, .ripple, .fast-ripple");
-	if (!from) return;
-	Object.defineProperty(e, "currentTarget", {
-		value: from,
-		configurable: true
-	});
-	updateRipple(e);
-}
-function onKeydownRippleDelegation(e) {
-	const from = e.target.closest(".slow-ripple, .ripple, .fast-ripple");
-	if (!from || e.key !== " ") return;
-	Object.defineProperty(e, "currentTarget", {
-		value: from,
-		configurable: true
-	});
-	updateRipple(e);
-}
-function updateAllRipples() {
-	const body = document.body;
-	if (!body) return;
-	onWeak(body, "mousedown", onMousedownRippleDelegation);
-	onWeak(body, "keydown", onKeydownRippleDelegation);
-}
-//#endregion
-//#region src/cdn/elements/progress.ts
-function onInputDocument(e) {
-	const progress = e.target;
-	if (hasTag(progress, "progress")) updateProgress(progress);
-	else updateAllProgress();
-}
-function updateProgress(progress) {
-	requestAnimationFrame(() => {
-		if (!progress.hasAttribute("value") && !progress.hasAttribute("max")) {
-			const value = hasClass(progress, "circle") ? "50" : "100";
-			progress.style.setProperty("--_value", value);
-			progress.setAttribute("value", value);
-			progress.setAttribute("max", "100");
-			progress.classList.add("indeterminate");
-		} else progress.style.setProperty("--_value", String(progress.value));
-	});
-}
-function updateAllProgress() {
-	if (isChrome && !isMac && !isIOS) return;
-	const body = document.body;
-	const progresses = queryAll("progress");
-	if (!progresses.length) off(body, "input", onInputDocument, false);
-	else on(body, "input", onInputDocument, false);
-	for (let i = 0; i < progresses.length; i++) updateProgress(progresses[i]);
-}
-//#endregion
-//#region src/cdn/beer.ts
+//#region src/cdn/loader.ts
+var _url = import.meta.url;
 var _context = globalThis;
 var _timeoutMutation;
 var _mutation;
@@ -649,19 +819,19 @@ async function run(from, to, options, e) {
 	}
 	updateAllClickable(from);
 	if (hasTag(to, "dialog")) {
-		requestAnimationFrame(() => updateDialog(from, to));
+		requestAnimationFrame(() => globals_default().dialog?.updateDialog(from, to));
 		return;
 	}
 	if (hasTag(to, "menu")) {
-		requestAnimationFrame(() => updateMenu(from, to, e));
+		requestAnimationFrame(() => globals_default().menu?.updateMenu(from, to, e));
 		return;
 	}
 	if (hasClass(to, "snackbar")) {
-		requestAnimationFrame(() => updateSnackbar(to, options));
+		requestAnimationFrame(() => globals_default().snackbar?.updateSnackbar(to, options));
 		return;
 	}
 	if (hasClass(to, "page")) {
-		requestAnimationFrame(() => updatePage(to));
+		requestAnimationFrame(() => globals_default().page?.updatePage(to));
 		return;
 	}
 	if (hasClass(to, "active")) {
@@ -701,26 +871,32 @@ function _ui(selector, options) {
 			return;
 		}
 		if (selector === "guid") return guid();
-		if (selector === "mode") return updateMode(options);
-		if (selector === "theme") return updateTheme(options);
+		if (selector === "mode") return globals_default().theme?.updateMode(options);
+		if (selector === "theme") return globals_default().theme?.updateTheme(options);
+		if (selector === "import") {
+			importModulesFromQueryString(options);
+			return;
+		}
 		const to = query(selector);
 		if (!to) return;
 		run(to, to, options);
 	}
 	updateAllDataUis();
-	updateAllFields();
-	updateAllRipples();
-	updateAllSliders();
-	updateAllProgress();
+	globals_default().field?.updateAllFields();
+	globals_default().ripple?.updateAllRipples();
+	globals_default().slider?.updateAllSliders();
+	globals_default().progress?.updateAllProgress();
 }
 function start() {
 	if (_context.ui) return;
 	const body = _context.document?.body;
-	if (body && !body.classList.contains("dark") && !body.classList.contains("light")) updateMode("auto");
+	if (body && !body.classList.contains("dark") && !body.classList.contains("light")) globals_default().theme?.updateMode("auto");
 	setup();
 	_context.ui = _ui;
 }
+importModulesFromUrl(_url);
 start();
 var ui = _context.ui;
+globals_default().ui = ui;
 //#endregion
 export { ui as default, ui };

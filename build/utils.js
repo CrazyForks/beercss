@@ -1,7 +1,7 @@
 import postcss from 'postcss';
 import cssnano from 'cssnano';
 import fs from "fs-extra";
-import path from 'node:path';
+import path from 'path';
 import { build } from 'vite';
 
 function canBeNested(file) {
