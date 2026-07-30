@@ -1,6 +1,5 @@
 import { build } from "vite";
-import { toModule } from "./utils.js";
-import customElement from "./customElement.js";
+import { toCssModule, toJsModule } from "./utils.js";
 import readme from "./readme.js";
 import modules from "./modules.js";
 
@@ -25,8 +24,12 @@ try {
     },
   });
   
-  await toModule("./dist/cdn/beer.css");
-  await customElement();
+  await toCssModule("./dist/cdn/beer.css", "./dist/cdn/beer.css");
+  await toJsModule("./dist/cdn/beer.js", "./dist/cdn/beer.min.js", true);
+  await toJsModule("./src/cdn/loader.ts", "./dist/cdn/beer.loader.js");
+  await toJsModule("./src/cdn/loader.ts", "./dist/cdn/beer.loader.min.js", true);
+  await toJsModule("./src/cdn/customElement.js", "./dist/cdn/beer.customElement.js");
+  await toJsModule("./src/cdn/customElement.js", "./dist/cdn/beer.customElement.min.js", true);
   await readme();
   await modules();
 } catch(error) {

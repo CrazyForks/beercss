@@ -1,17 +1,23 @@
 import postcss from 'postcss';
 import cssnano from 'cssnano';
 import fs from "fs-extra";
+import path from 'node:path';
+import { build } from 'vite';
 
 function canBeNested(file) {
-  return !/(global.css|light.css|dark.css|font.css|beer.css|beer.min.css|beer.scoped.css|beer.scoped.min.css)$/.test(file);
+  return !/(global.css|light.css|dark.css|font.css|beer.css|beer.min.css|beer.scoped.css|beer.scoped.min.css|all.css|all.min.css|all.scoped.css|all.scoped.min.css)$/.test(file);
 }
 
 function needsToRevert(file) {
   return /(global.css|beer.css|beer.min.css|beer.scoped.css|beer.scoped.min.css)$/.test(file);
 }
 
-export function toUrl(content) {
-  return content.replace(/url\((\/|..\/\w+\/)/g, "url(");
+export function toUrl(file, content) {
+  const isModule = /elements|helpers|settings/.test(file);
+
+  return isModule
+    ? content.replace(/url\((\/|..\/\w+\/)/g, "url(../")
+    : content.replace(/url\((\/|..\/\w+\/)/g, "url(");
 }
 
 export function toScoped(file, content) {
@@ -37,10 +43,6 @@ export async function toMinifyCss(content) {
   .then(result => result.css);
 }
 
-export function toMinifyJs(content) {
-  return content.replace(/\s{2,}|(\/\*.+\*\/)/g, "");
-}
-
 export function copy(input, output) {
   fs.copySync(input, output);
 }
@@ -54,16 +56,40 @@ export function readFile(file) {
 }
 
 export function saveFile(file, content) {
+  fs.ensureFileSync(file);
   fs.writeFileSync(file, content);
 }
 
-export async function toModule(file) {
-  let content = readFile(file);
-  content = toUrl(content);
+export async function toCssModule(input, output) {
+  let content = readFile(input);
+  content = toUrl(input, content);
 
-  const scopedContent = toScoped(file, content);
-  saveFile(file, content);
-  saveFile(file.replace('.css', '.min.css'), await toMinifyCss(content));
-  saveFile(file.replace('.css', '.scoped.css'), scopedContent);
-  saveFile(file.replace('.css', '.scoped.min.css'), await toMinifyCss(scopedContent));
+  const scopedContent = toScoped(input, content);
+  saveFile(output, content);
+  saveFile(output.replace('.css', '.min.css'), await toMinifyCss(content));
+  saveFile(output.replace('.css', '.scoped.css'), scopedContent);
+  saveFile(output.replace('.css', '.scoped.min.css'), await toMinifyCss(scopedContent));
+}
+
+export async function toJsModule(input, output, minify = false) {
+  const name = path.basename(output).replace(/(\.ts|\.js)$/, "");
+  const outDir = path.dirname(output);
+
+  await build({
+    configFile: false,
+    build: {
+      minify: minify,
+      outDir: outDir,
+      emptyOutDir: false, 
+      lib: {
+        entry: input,
+        name: name,
+        fileName: name,
+        formats: ['es'], 
+      },
+      rollupOptions: {
+        external: [], 
+      }
+    }
+  });
 }
