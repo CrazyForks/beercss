@@ -6,50 +6,50 @@ div
     )
       i code
   .grid
-    article#main-layout-compact.s12.m6.l4.center-align.no-elevate.no-margin
+    article#main-layout-compact.s12.m6.l4.center-align.no-elevate.no-margin.round
       .width-8.auto-margin
-        .padding.fill.no-elevate.center-align.middle-align.height-12
-        .padding.fill.no-elevate.top-margin
+        .padding.round.fill.no-elevate.center-align.middle-align.height-12
+        .padding.round.fill.no-elevate.top-margin
       h6.no-margin.absolute.middle.center(aria-hidden="true") Compact
-    article#main-layout-medium.s12.m6.l4.center-align.no-elevate.no-margin
+    article#main-layout-medium.s12.m6.l4.center-align.no-elevate.no-margin.round
       .medium-width
         .row(dir="ltr")
-          .padding.fill.no-elevate.height-15
+          .padding.round.fill.no-elevate.height-15
           .max
-            .padding.fill.no-elevate.center-align.middle-align.height-15
+            .padding.round.fill.no-elevate.center-align.middle-align.height-15
       h6.no-margin.absolute.middle.center(aria-hidden="true") Medium
-    article#main-layout-expanded.s12.m6.l4.center-align.no-elevate.no-margin
+    article#main-layout-expanded.s12.m6.l4.center-align.no-elevate.no-margin.round
       .medium-width
         .row(dir="ltr")
-          .padding.fill.no-elevate.height-15.width-6
+          .padding.round.fill.no-elevate.height-15.width-6
           .max
-            .padding.fill.no-elevate.center-align.middle-align.height-15
+            .padding.round.fill.no-elevate.center-align.middle-align.height-15
       h6.no-margin.absolute.middle.center(aria-hidden="true") Expanded
-    article#main-layout-muti-panes.s12.m6.l4.center-align.no-elevate.no-margin
+    article#main-layout-muti-panes.s12.m6.l4.center-align.no-elevate.no-margin.round
       .medium-width
         .row(dir="ltr")
-          .padding.fill.no-elevate.height-15
+          .padding.round.fill.no-elevate.height-15
           .max
             .row
               .max
-                .padding.fill.no-elevate.center-align.middle-align.height-15
+                .padding.round.fill.no-elevate.center-align.middle-align.height-15
               .max
-                .padding.fill.no-elevate.center-align.middle-align.height-15
+                .padding.round.fill.no-elevate.center-align.middle-align.height-15
       h6.no-margin.absolute.middle.center(aria-hidden="true") Multi panes
-    article#main-layout-custom.s12.m6.l4.center-align.no-elevate.no-margin
+    article#main-layout-custom.s12.m6.l4.center-align.no-elevate.no-margin.round
       .medium-width
         .row(dir="ltr")
-          .padding.fill.no-elevate.height-15
+          .padding.round.fill.no-elevate.height-15
           .max
             .grid
               .s6
-                .padding.fill.no-elevate.center-align.middle-align.height-7
+                .padding.round.fill.no-elevate.center-align.middle-align.height-7
               .s6
-                .padding.fill.no-elevate.center-align.middle-align.height-7
+                .padding.round.fill.no-elevate.center-align.middle-align.height-7
               .s6
-                .padding.fill.no-elevate.center-align.middle-align.height-7
+                .padding.round.fill.no-elevate.center-align.middle-align.height-7
               .s6
-                .padding.fill.no-elevate.center-align.middle-align.height-7
+                .padding.round.fill.no-elevate.center-align.middle-align.height-7
       h6.no-margin.absolute.middle.center(aria-hidden="true") Custom
   #main-layouts(v-if="data.isShowingSample")
     #compact
