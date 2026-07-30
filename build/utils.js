@@ -71,24 +71,38 @@ export async function toCssModule(input, output) {
   saveFile(output.replace('.css', '.scoped.min.css'), await toMinifyCss(scopedContent));
 }
 
-export async function toJsModule(input, output, minify = false) {
+export async function toJsModule(input, output) {
   const name = path.basename(output).replace(/(\.ts|\.js)$/, "");
   const outDir = path.dirname(output);
+
+  if (input != output) {
+    await build({
+      configFile: false,
+      build: {
+        minify: false,
+        outDir: outDir,
+        emptyOutDir: false, 
+        lib: {
+          entry: input,
+          name: name,
+          fileName: name,
+          formats: ['es'], 
+        }
+      }
+    });
+  }
 
   await build({
     configFile: false,
     build: {
-      minify: minify,
+      minify: true,
       outDir: outDir,
       emptyOutDir: false, 
       lib: {
         entry: input,
-        name: name,
-        fileName: name,
+        name: `${name}.min`,
+        fileName: `${name}.min`,
         formats: ['es'], 
-      },
-      rollupOptions: {
-        external: [], 
       }
     }
   });

@@ -25,11 +25,9 @@ try {
   });
   
   await toCssModule("./dist/cdn/beer.css", "./dist/cdn/beer.css");
-  await toJsModule("./dist/cdn/beer.js", "./dist/cdn/beer.min.js", true);
+  await toJsModule("./dist/cdn/beer.js", "./dist/cdn/beer.js");
   await toJsModule("./src/cdn/loader.ts", "./dist/cdn/beer.loader.js");
-  await toJsModule("./src/cdn/loader.ts", "./dist/cdn/beer.loader.min.js", true);
   await toJsModule("./src/cdn/customElement.js", "./dist/cdn/beer.customElement.js");
-  await toJsModule("./src/cdn/customElement.js", "./dist/cdn/beer.customElement.min.js", true);
   await readme();
   await modules();
 } catch(error) {

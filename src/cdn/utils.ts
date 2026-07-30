@@ -252,7 +252,7 @@ export async function importModulesFromUrl(url?: string): Promise<string> {
   }
 
   for(let module of jsModules) {
-    _urls[module] = _urls[module] || import(/* @vite-ignore */ module);
+    _urls[module] = _urls[module] || import(module);
     requests.push(_urls[module]);
   }
 
