@@ -64,7 +64,7 @@ label {
   outline-offset: 0.25rem;
 }
 
-:is(nav, .row, li).group > :focus-visible {
+:is(nav, .row).group > :focus-visible {
   z-index: 1;
 }
 

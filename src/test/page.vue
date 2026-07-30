@@ -222,7 +222,6 @@ main.responsive
       input(type="checkbox", name="checkbox")
       span
 
-
   .large-space 
   div
     nav.tabbed
@@ -234,6 +233,51 @@ main.responsive
     #page2.page Page 2
     #page3.page Page 3
     #page4.page Page 4
+  .large-space 
+  div
+    nav.tabbed
+      ul
+        li
+          a.active(data-ui="#page1a") Item 1
+        li
+          a(data-ui="#page2a") Item 2
+        li
+          a(data-ui="#page3a") Item 3
+        li
+          a(data-ui="#page4a") Item 4
+    #page1a.page.active Page 1
+    #page2a.page Page 2
+    #page3a.page Page 3
+    #page4a.page Page 4
+
+  .large-space 
+  div
+    nav.toolbar
+      a.active
+        i done
+      a
+        i search
+      a
+        i share
+      a
+        i more_vert
+  .large-space 
+  div
+    nav.toolbar
+      ul
+        li
+          a.active
+            i done
+        li
+          a
+            i search
+        li
+          a
+            i share
+        li
+          a
+            i more_vert
+
   h5(aria-hidden="true") Menus
   h6(aria-hidden="true") Bad html
   nav

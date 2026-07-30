@@ -185,49 +185,55 @@
   color: var(--on-surface-variant) !important;
 }
 
-.primary-container > button,
-.primary > a.active > i,
+nav.primary-container > button,
+nav.primary a.active > i,
+nav:is(.max, .tabbed, .toolbar).primary a.active,
 .primary > :is(button, a, li).active {
   background-color: var(--primary-container) !important;
   color: var(--on-primary-container) !important;
 }
 
-.primary > button,
-.primary-container > a.active > i,
+nav.primary > button,
+nav.primary-container a.active > i,
+nav:is(.max, .tabbed, .toolbar).primary-container a.active,
 .primary-container > :is(button, a, li).active {
   background-color: var(--primary) !important;
   color: var(--on-primary) !important;
 }
 
-.secondary-container > button,
-.secondary > a.active > i,
+nav.secondary-container > button,
+nav.secondary a.active > i,
+nav:is(.max, .tabbed, .toolbar).secondary a.active,
 .secondary > :is(button, a, li).active {
   background-color: var(--secondary-container) !important;
   color: var(--on-secondary-container) !important;
 }
 
-.secondary > button,
-.secondary-container > a.active > i,
+nav.secondary > button,
+nav.secondary-container a.active > i,
+nav:is(.max, .tabbed, .toolbar).secondary-container a.active,
 .secondary-container > :is(button, a, li).active {
   background-color: var(--secondary) !important;
   color: var(--on-secondary) !important;
 }
 
-.tertiary-container > button,
-.tertiary > a.active > i,
+nav.tertiary-container > button,
+nav.tertiary a.active > i,
+nav:is(.max, .tabbed, .toolbar).tertiary a.active,
 .tertiary > :is(button, a, li).active {
   background-color: var(--tertiary-container) !important;
   color: var(--on-tertiary-container) !important;
 }
 
-.tertiary > button,
-.tertiary-container > a.active > i,
+nav.tertiary > button,
+nav.tertiary-container a.active > i,
+nav:is(.max, .tabbed, .toolbar).tertiary-container a.active,
 .tertiary-container > :is(button, a, li).active {
   background-color: var(--tertiary) !important;
   color: var(--on-tertiary) !important;
 }
 
-nav:is(.left, .right, .bottom, .top):not(.max) > a.active {
+nav:is(.left, .right, .bottom, .top):not(.max) a.active {
   background: none !important;
   color: inherit !important;
 }

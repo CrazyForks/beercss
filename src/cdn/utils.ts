@@ -140,6 +140,10 @@ export function parent(element: Element): Element | null {
   return element?.parentElement;
 }
 
+export function closest(element: Element, selector: string): Element | null {
+  return element?.closest(selector);
+}
+
 export function create(htmlAttributesAsJson: any): HTMLElement {
   const element = document.createElement("div");
   for (let i = 0, keys = Object.keys(htmlAttributesAsJson), n = keys.length; i < n; i++) {
@@ -165,8 +169,8 @@ export function queryDataUi(id: string): Element | null {
 export function updateAllClickable(element: Element) {
   if (element.id && hasClass(element, "page")) element = queryDataUi(element.id) ?? element;
 
-  const container = parent(element);
-  if (!hasClass(container, "tabs") && !hasClass(container, "tabbed") && !hasTag(container, "nav")) return;
+  const container = closest(element, ".tabs, nav");
+  if (!container) return;
 
   const as = queryAll("a", container);
   removeClass(as, "active");
