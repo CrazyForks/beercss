@@ -304,7 +304,7 @@ You can use this html to setup your project. See on [Codepen](https://codepen.io
 .element .helper {...}
 ```
 
-## Tips to master beercss
+## 🧙‍♂️ Tips to master beercss
 
 1. Try use [Helpers](HELPERS.md) first, before any custom css.
 2. To customize themes go to [Settings](SETTINGS.md).

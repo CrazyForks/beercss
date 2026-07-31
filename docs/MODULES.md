@@ -177,7 +177,7 @@ import "beercss/dist/cdn/elements/**";
 
 **We exposed the `src` folder for advanced users. It uses Vite and Typescript. It doesn't has scoped version. Be careful and use by your own here https://cdn.jsdelivr.net/npm/beercss@5.0.1/src/cdn/.**
 
-## Tips to master beercss modules
+## 🧙‍♂️ Tips to master beercss modules
 
 1. Read the DO and DON'T section to import correctly.
 2. For [Vite](https://vite.dev/config/build-options#build-assetsinlinelimit) users, build your app with `assetsInlineLimit: 0` to keep the original size of CSS files.
