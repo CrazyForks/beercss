@@ -27,7 +27,7 @@ try {
   await toCssModule("./dist/cdn/beer.css", "./dist/cdn/beer.css");
   await toJsModule("./src/cdn/beer.ts", "./dist/cdn/beer.js");
   await toJsModule("./src/cdn/loader.ts", "./dist/cdn/beer.loader.js");
-  await toJsModule("./src/cdn/customElement.js", "./dist/cdn/beer.customElement.js");
+  await toJsModule("./src/cdn/customElement.js", "./dist/cdn/beer.custom-element.js");
   await readme();
   await modules();
 } catch(error) {
