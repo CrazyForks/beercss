@@ -148,7 +148,7 @@ Download all files from CDN https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/
 
 ### MODULE VERSION
 
-The module version loads the [Settings](SETTINGS.md) , [Elements](ELEMENTS.md) and [Helpers](HELPERS.md) as modules. More about in [Modules](MODULES.md) section.
+The module version loads the [Settings](SETTINGS.md) , [Elements](ELEMENTS.md) and [Helpers](HELPERS.md) as modules. More about in [Modules](docs/MODULES.md) section.
 
 ### HTML
 
