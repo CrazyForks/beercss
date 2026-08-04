@@ -3,7 +3,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(../material-symbols-outlined.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.1/dist/cdn/material-symbols-outlined.woff2) format("woff2");
+  src: url(../material-symbols-outlined.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/material-symbols-outlined.woff2) format("woff2");
 }
 
 @font-face {
@@ -11,7 +11,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(../material-symbols-rounded.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.1/dist/cdn/material-symbols-rounded.woff2) format("woff2");
+  src: url(../material-symbols-rounded.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/material-symbols-rounded.woff2) format("woff2");
 }
 
 @font-face {
@@ -19,7 +19,7 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(../material-symbols-sharp.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.1/dist/cdn/material-symbols-sharp.woff2) format("woff2");
+  src: url(../material-symbols-sharp.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/material-symbols-sharp.woff2) format("woff2");
 }
 
 @font-face {
@@ -27,5 +27,5 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(../material-symbols-subset.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.1/dist/cdn/material-symbols-subset.woff2) format("woff2");
+  src: url(../material-symbols-subset.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/material-symbols-subset.woff2) format("woff2");
 }

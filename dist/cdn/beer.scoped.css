@@ -43,28 +43,28 @@
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(material-symbols-outlined.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.1/dist/cdn/material-symbols-outlined.woff2) format("woff2");
+  src: url(material-symbols-outlined.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/material-symbols-outlined.woff2) format("woff2");
 }
 @font-face {
   font-family: "Material Symbols Rounded";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(material-symbols-rounded.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.1/dist/cdn/material-symbols-rounded.woff2) format("woff2");
+  src: url(material-symbols-rounded.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/material-symbols-rounded.woff2) format("woff2");
 }
 @font-face {
   font-family: "Material Symbols Sharp";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(material-symbols-sharp.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.1/dist/cdn/material-symbols-sharp.woff2) format("woff2");
+  src: url(material-symbols-sharp.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/material-symbols-sharp.woff2) format("woff2");
 }
 @font-face {
   font-family: "Material Symbols Subset";
   font-style: normal;
   font-weight: 400;
   font-display: swap;
-  src: url(material-symbols-subset.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.1/dist/cdn/material-symbols-subset.woff2) format("woff2");
+  src: url(material-symbols-subset.woff2) format("woff2"), url(https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/material-symbols-subset.woff2) format("woff2");
 }
 :root {
   --size: 1rem;
@@ -1772,7 +1772,7 @@ button {
   color: var(--on-primary);
   padding: 0 var(--_padding);
   background-color: var(--primary);
-  border-radius: 1.25rem;
+  border-radius: var(--_round);
   transition: transform var(--speed3), border-radius var(--speed2), padding var(--speed3);
   user-select: none;
   gap: 0.5rem;
@@ -1842,8 +1842,8 @@ button {
   color: var(--inverse-on-surface) !important;
   border-color: var(--inverse-surface) !important;
 }
-:is(.button, button):not(.chip, .circle, .square, [class*=round]):active,
-:is(.button, button):not(.chip, .circle, .square, [class*=round]).active {
+:is(.button, button):not(.chip):active,
+:is(.button, button):not(.chip).active {
   border-radius: 0.5rem !important;
 }
 article {

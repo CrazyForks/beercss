@@ -13,7 +13,7 @@ button {
   color: var(--on-primary);
   padding: 0 var(--_padding);
   background-color: var(--primary);
-  border-radius: 1.25rem;
+  border-radius: var(--_round);
   transition: transform var(--speed3), border-radius var(--speed2), padding var(--speed3);
   user-select: none;
   gap: 0.5rem;
@@ -100,7 +100,7 @@ button {
   border-color: var(--inverse-surface) !important;
 }
 
-:is(.button, button):not(.chip, .circle, .square, [class*=round]):active,
-:is(.button, button):not(.chip, .circle, .square, [class*=round]).active {
+:is(.button, button):not(.chip):active,
+:is(.button, button):not(.chip).active {
   border-radius: 0.5rem !important;
 }
