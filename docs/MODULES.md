@@ -6,40 +6,40 @@ Use the [Settings](SETTINGS.md) , [Elements](ELEMENTS.md) and [Helpers](HELPERS.
 
 **Query string:** global, light, dark, font, reset, theme
 
-**Direct import:** https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/settings/
+**Direct import:** https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/settings/
 
 ### ELEMENTS
 
 **Query string:** badge, bar, button, card, chip, dialog, divider, expansion, field, grid, icon, layout, list, mainLayout, media, menu, navigation, overlay, page, progress, selection, shape, slider, snackbar, tab, table, tooltip, typography
 
-**Direct import:** https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/elements/
+**Direct import:** https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/elements/
 
 ### HELPERS
 
 **Query string:** alignment, blur, color, direction, elevate, form, margin, opacity, padding, position, responsive, ripple, scroll, shadow, size, space, wave, zoom
 
-**Direct import:** https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/helpers/
+**Direct import:** https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/helpers/
 
 ### DEFAULT VERSION
 
 **Query string**
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/beer.loader.js?elements=button,dialog&helpers=form"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/beer.loader.js?elements=button,dialog&helpers=form"></script>
 ```
 
 **Direct import**
 
 ```html
 <style>
-  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/settings/all.css";
-  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/helpers/form.css";
-  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/elements/button.css";
-  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/elements/dialog.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/settings/all.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/helpers/form.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/elements/button.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/elements/dialog.css";
 </style>
 <script type="module">
-  import "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/elements/dialog.js";
-  import "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/beer.loader.js";
+  import "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/elements/dialog.js";
+  import "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/beer.loader.js";
 </script>
 ```
 
@@ -47,7 +47,7 @@ Use the [Settings](SETTINGS.md) , [Elements](ELEMENTS.md) and [Helpers](HELPERS.
 
 ```html
 <script type="module">
-  import ui from "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/beer.loader.js";
+  import ui from "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/beer.loader.js";
   ui("import", "elements=button,dialog&helpers=form");
 </script>
 ```
@@ -72,21 +72,21 @@ import "beercss/loader";
 **Query string**
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/beer.loader.js?elements=button,dialog&helpers=form&scoped=1"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/beer.loader.js?elements=button,dialog&helpers=form&scoped=1"></script>
 ```
 
 **Direct import**
 
 ```html
 <style>
-  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/settings/all.scoped.css";
-  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/helpers/form.scoped.css";
-  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/elements/button.scoped.css";
-  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/elements/dialog.scoped.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/settings/all.scoped.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/helpers/form.scoped.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/elements/button.scoped.css";
+  @import "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/elements/dialog.scoped.css";
 </style>
 <script type="module">
-  import "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/elements/dialog.js";
-  import "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/beer.loader.js";
+  import "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/elements/dialog.js";
+  import "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/beer.loader.js";
 </script>
 ```
 
@@ -94,7 +94,7 @@ import "beercss/loader";
 
 ```html
 <script type="module">
-  import ui from "https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/beer.loader.js";
+  import ui from "https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/beer.loader.js";
   ui("import", "elements=button,dialog&helpers=form&scoped=1");
 </script>
 ```
@@ -121,13 +121,13 @@ The custom element is scoped by default. Note the empty query string params on s
 **Query string**
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/beer.custom-element.js?elements=button,dialog&helpers=form"></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/beer.custom-element.js?elements=button,dialog&helpers=form"></script>
 ```
 
 **The `import` attribute**
 
 ```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@5.0.2/dist/cdn/beer.custom-element.js?settings=&elements=&helpers="></script>
+<script type="module" src="https://cdn.jsdelivr.net/npm/beercss@5.0.3/dist/cdn/beer.custom-element.js?settings=&elements=&helpers="></script>
 
 <beer-css import="elements=button&dialog&helpers=form">...</beer-css>
 ```
@@ -175,7 +175,7 @@ import "beercss/dist/cdn/helpers/**";
 import "beercss/dist/cdn/elements/**";
 ```
 
-**We exposed the `src` folder for advanced users. It uses Vite and Typescript. It doesn't has scoped version. Be careful and use by your own here https://cdn.jsdelivr.net/npm/beercss@5.0.2/src/cdn/.**
+**We exposed the `src` folder for advanced users. It uses Vite and Typescript. It doesn't has scoped version. Be careful and use by your own here https://cdn.jsdelivr.net/npm/beercss@5.0.3/src/cdn/.**
 
 ## 🧙‍♂️ Tips to master beercss modules
 
